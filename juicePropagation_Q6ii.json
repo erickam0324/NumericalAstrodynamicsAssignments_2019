@@ -1,0 +1,119 @@
+{
+    "initialEpoch": 1050479640,
+    "finalEpoch": 1051718040,
+    "globalFrameOrigin": "Jupiter",
+    "globalFrameOrientation": "ECLIPJ2000",
+    "spice": {
+        "useStandardKernels": true
+    },
+    "bodies": {
+        "Jupiter": {
+            "useDefaultSettings": true
+             },
+        "Ganymede": {
+            "useDefaultSettings": true,
+            "atmosphere": {
+                "densityScaleHeight": 40E3,
+                "constantTemperature": 290,
+                "densityAtZeroAltitude": 2E-9,
+                "type": "exponential"
+            }
+        },        
+        "JUICE": {
+            "ephemeris":
+            {
+                "type": "directSpice",
+                "frameOrigin": "Jupiter",
+                "frameOrientation": "ECLIPJ2000"
+            },
+            "aerodynamics": {
+                   "forceCoefficients": [
+                       1.5,
+                       0,
+                       0
+                   ]
+               },
+            "mass": 2000,
+            "referenceArea": 100
+        }
+    },
+    "propagators": [
+        {
+            "bodiesToPropagate": [
+                "JUICE",
+                "Ganymede"
+            ],
+            "centralBodies": [
+                "Jupiter",
+                "Jupiter"
+            ],
+            "accelerations": {
+                "JUICE": {
+                    "Ganymede": [
+                        {
+                        "type": "pointMassGravity"
+                        }
+                    ],
+                    "Jupiter": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ]
+                },
+                "Ganymede": {
+                    "Jupiter": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ]
+                }
+            }
+            
+        }
+    ],
+    "integrator": {
+        "type": "rungeKutta4",
+        "stepSize": 10
+    },
+    "export": [
+        {
+            "file": "dependent_variables_Q6ii.dat",
+            "variables": [
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "keplerElements",
+                    "relativeToBody": "Jupiter"
+                }
+            ]
+        },
+        {
+            "file": "propagated_state_Q6ii.dat",
+            "variables": [
+                {
+                    "type": "state"
+                }
+            ]
+        },
+        {
+            "file": "JtoG_Q6ii.dat",
+            "variables": [
+                {
+                "body": "Ganymede" ,
+                "dependentVariableType": "relativePosition",
+                "relativeToBody": "Jupiter"
+                }
+            ]
+        },
+        {
+            "file": "statewrtG_Q6ii.dat",
+            "variables": [
+                {
+                "body": "JUICE" ,
+                "dependentVariableType": "relativePosition",
+                "relativeToBody": "Ganymede"
+                }
+            ]
+        },
+    ],
+    "printVariableTypes": true
+}

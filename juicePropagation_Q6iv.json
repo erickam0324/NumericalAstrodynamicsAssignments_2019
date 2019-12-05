@@ -1,0 +1,295 @@
+{
+    "initialEpoch": 1050479640,
+    "finalEpoch": 1051718040,
+    "globalFrameOrigin": "Jupiter",
+    "globalFrameOrientation": "ECLIPJ2000",
+    "spice": {
+        "useStandardKernels": true
+    },
+    "bodies": {
+        "Ganymede": {
+            "useDefaultSettings": true,
+            "atmosphere": {
+                "densityScaleHeight": 40E3,
+                "constantTemperature": 290,
+                "densityAtZeroAltitude": 2E-9,
+                "type": "exponential"
+            }
+        },
+        "Jupiter": {
+            "useDefaultSettings": true
+        },
+        "Sun": {
+            "useDefaultSettings": true
+        },
+        "Saturn": {
+            "useDefaultSettings": true
+        },
+        "Europa": {
+            "useDefaultSettings": true
+        },
+        "Io": {
+            "useDefaultSettings": true
+        },
+        "Callisto": {
+            "useDefaultSettings": true
+        },
+        "JUICE": {
+            "ephemeris":
+            {
+                "type": "directSpice",
+                "frameOrigin": "Jupiter",
+                "frameOrientation": "ECLIPJ2000"
+            },
+            "aerodynamics": {
+                   "forceCoefficients": [
+                       1.5,
+                       0,
+                       0
+                   ]
+               },
+            "mass": 2000,
+            "referenceArea": 100,
+            "radiationPressure": {
+                  "Sun": {
+                    "radiationPressureCoefficient": 1.2,
+                    "occultingBodies": [ "Ganymede" ]
+                  }
+            }
+        }
+    },
+
+
+    "propagators": [
+        {
+            "bodiesToPropagate": [
+                "JUICE",
+                "Ganymede"
+            ],
+            "centralBodies": [
+                "Jupiter",
+                "Jupiter"
+            ],
+            "accelerations": {
+                "JUICE": {
+                    "Ganymede": [
+                        {
+                            "type": "sphericalHarmonicGravity",
+                            "maximumDegree": 2,
+                            "maximumOrder": 2
+                        },
+                        {
+                             "type": "aerodynamic"
+                        }
+
+                    ],
+                    "Jupiter": [
+                        {
+                            "type": "sphericalHarmonicGravity",
+                            "maximumDegree": 4,
+                            "maximumOrder": 0
+                        }
+                    ],
+                    "Sun": [
+                        {
+                            "type": "pointMassGravity"
+                        },
+                        {
+                            "type": "cannonBallRadiationPressure"
+                        }
+                    ],
+                    "Saturn": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Europa": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Io": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Callisto": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ]
+                },
+                "Ganymede": {
+                    "Jupiter": [
+                        {
+                            "type": "sphericalHarmonicGravity",
+                            "maximumDegree": 4,
+                            "maximumOrder": 0
+                        }
+                    ],
+                    "Sun": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Saturn": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Europa": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Io": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+                    "Callisto": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                        ]
+                }
+            }
+        }
+    ],
+    "integrator": {
+        "type": "rungeKutta4",
+        "stepSize": 10
+    },
+    "export": [
+        {
+            "file": "J_dependent_variables_Q6iv.dat",
+            "variables": [
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"sphericalHarmonicGravity",
+                    "bodyExertingAcceleration": "Ganymede"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"sphericalHarmonicGravity",
+                    "bodyExertingAcceleration": "Jupiter"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Sun"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Saturn"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Io"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Europa"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Callisto"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"aerodynamic",
+                    "bodyExertingAcceleration": "Ganymede"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"cannonBallRadiationPressure",
+                    "bodyExertingAcceleration": "Sun"
+                }
+            ]
+        },
+        {
+            "file": "propagated_state_Q6iv.dat",
+            "variables": [
+                {
+                    "type": "state"
+                }
+            ]
+        },
+        {
+            "file": "statewrtG_Q6iv.dat",
+            "variables": [
+                {
+                "body": "JUICE" ,
+                "dependentVariableType": "relativePosition",
+                "relativeToBody": "Ganymede"
+                }
+            ]
+        },
+        {
+            "file": "JtoG_Q6iv.dat",
+            "variables": [
+                {
+                "body": "Ganymede" ,
+                "dependentVariableType": "relativePosition",
+                "relativeToBody": "Jupiter"
+                }
+            ]
+        },
+        {
+            "file": "G_dependent_variables_Q6iv.dat",
+            "variables": [
+                {
+                    "body": "Ganymede",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"sphericalHarmonicGravity",
+                    "bodyExertingAcceleration": "Jupiter"
+                },
+                {
+                    "body": "Ganymede",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Sun"
+                },
+                {
+                    "body": "Ganymede",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Saturn"
+                },
+                {
+                    "body": "Ganymede",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Io"
+                },
+                {
+                    "body": "Ganymede",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Europa"
+                },
+                {
+                    "body": "Ganymede",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType":"pointMassGravity",
+                    "bodyExertingAcceleration": "Callisto"
+                }
+            ]
+        }
+
+    ],
+    "printVariableTypes": true
+}
